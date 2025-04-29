@@ -1,36 +1,34 @@
+<!DOCTYPE html>
 <html>
-<div id="chartContainer">
-  <script src="/lib/d3.v4.3.0.js"></script>
+<head>
+  <meta charset="utf-8">
+  <title>Dimple Chart on GitHub Pages</title>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+</head>
+<body>
+  <div id="chartContainer"></div>
+
   <script type="text/javascript">
-    var svg = dimple.newSvg("#chartContainer", 590, 400);
-    d3.tsv("/data/example_data.tsv", function (data) {
+    document.addEventListener("DOMContentLoaded", function () {
+      var svg = dimple.newSvg("#chartContainer", 590, 400);
+      
+      d3.csv("https://github.com/RomanVincentUCCS/Lab9/blob/9f8c5c06d6e0059e07fb9f148c9502692ff2ecab/CityData_WUP2018_top200.csv", function (data) {
+        data = dimple.filterData(data, "SKU", "Theta 18 Pack Standard");
+        data = dimple.filterData(data, "Channel", "Hypermarkets");
 
-      // Filter for a single SKU and Channel
-      data = dimple.filterData(data, "SKU", "Theta 18 Pack Standard");
-      data = dimple.filterData(data, "Channel", "Hypermarkets");
-
-      // Create and Position a Chart
-      var myChart = new dimple.chart(svg, data);
-      myChart.setBounds(60, 30, 500, 300);
-      var x = myChart.addCategoryAxis("x", "Month")
-      myChart.addMeasureAxis("y", "Unit Sales");
-
-      // Order the x axis by date
-      x.addOrderRule("Date");
-
-      // Min price will be green, middle price yellow and max red
-      myChart.addColorAxis("Price", ["green", "yellow", "red"]);
-
-      // Add a thick line with markers
-      var lines = myChart.addSeries(null, dimple.plot.line);
-      lines.lineWeight = 5;
-      lines.lineMarkers = true;
-
-      // Draw the chart
-      myChart.draw();
-
+        var myChart = new dimple.chart(svg, data);
+        myChart.setBounds(60, 30, 500, 300);
+        var x = myChart.addCategoryAxis("x", "Month");
+        myChart.addMeasureAxis("y", "Unit Sales");
+        x.addOrderRule("Date");
+        myChart.addColorAxis("Price", ["green", "yellow", "red"]);
+        var lines = myChart.addSeries(null, dimple.plot.line);
+        lines.lineWeight = 5;
+        lines.lineMarkers = true;
+        myChart.draw();
+      });
     });
   </script>
-</div>
+</body>
 </html>

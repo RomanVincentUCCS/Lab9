@@ -2,23 +2,22 @@
 <html>
 <head>
   <title>Japan Birth Rate Line Chart</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
   <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
   <style>
     #chartContainer {
       width: 840px;
       margin: auto;
       margin-top: 50px;
     }
-    #chartContainer p {
-      margin-left: 60px;
-      margin-bottom: 5px;
-      margin-top: 0;
-      padding: 0;
-    }
     #charttitle {
       font: bold 22px Verdana, sans-serif;
+      margin-left: 60px;
+    }
+    #chartsubhead {
+      margin-left: 60px;
+      font-family: Verdana, sans-serif;
     }
   </style>
 </head>
@@ -30,37 +29,36 @@
 
   <script>
     var svg = dimple.newSvg("#chartContainer", 840, 440);
-    
+
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-      
+
       data.forEach(function(d) {
         d.year = +d.year;
         d.birth_rate = +d.birth_rate;
       });
 
-      var filteredData = data.filter(function(d) {
+      var filtered = data.filter(function(d) {
         return d.year >= 2007 && d.year <= 2022;
       });
 
-      filteredData.forEach(function(d) {
+      filtered.forEach(function(d) {
         d.year = d.year.toString();
       });
 
-      var chart = new dimple.chart(svg, filteredData);
+      var chart = new dimple.chart(svg, filtered);
       chart.setBounds(60, 30, 700, 300);
 
       var x = chart.addCategoryAxis("x", "year");
       x.addOrderRule("year");
+
       var y = chart.addMeasureAxis("y", "birth_rate");
       y.overrideMin = 6;
       y.overrideMax = 9;
       y.title = "Births per 1,000 People";
 
-      chart.addColorAxis("birth_rate", ["green", "yellow", "red"]);
-
-      var line = chart.addSeries(null, dimple.plot.line);
-      line.lineWeight = 4;
-      line.lineMarkers = true;
+      var s = chart.addSeries(null, dimple.plot.line);
+      s.lineWeight = 3;
+      s.lineMarkers = true;
 
       chart.draw();
     });

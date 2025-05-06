@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Japan Birth Rate Line Chart</title>
+  <title>Japan Birth Rate Chart</title>
   <meta charset="utf-8" />
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
@@ -31,27 +31,28 @@
     var svg = dimple.newSvg("#chartContainer", 840, 440);
 
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-
       data.forEach(function(d) {
-        d.year = +d.year;
-        d.birth_rate = +d.birth_rate;
+        // Adjust column names based on your CSV's headers
+        d["Year"] = +d["Year"];
+        d["Birth Rate"] = +d["Birth Rate"];
       });
 
       var filtered = data.filter(function(d) {
-        return d.year >= 2007 && d.year <= 2022;
+        return d["Year"] >= 2007 && d["Year"] <= 2022;
       });
 
+      // Convert year to string for category axis
       filtered.forEach(function(d) {
-        d.year = d.year.toString();
+        d["Year"] = d["Year"].toString();
       });
 
       var chart = new dimple.chart(svg, filtered);
       chart.setBounds(60, 30, 700, 300);
 
-      var x = chart.addCategoryAxis("x", "year");
-      x.addOrderRule("year");
+      var x = chart.addCategoryAxis("x", "Year");
+      x.addOrderRule("Year");
 
-      var y = chart.addMeasureAxis("y", "birth_rate");
+      var y = chart.addMeasureAxis("y", "Birth Rate");
       y.overrideMin = 6;
       y.overrideMax = 9;
       y.title = "Births per 1,000 People";

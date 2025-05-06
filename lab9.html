@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
   <title>Japan Birth Rate Chart</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-  <script charset="utf-8" src="https://d3js.org/d3.v4.min.js"></script>
+  <script charset="utf-8" src="https://d3js.org/d3.v3.min.js"></script>
   <script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
 
   <style>
@@ -22,18 +22,19 @@
   <script>
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function(Data) {
       console.log(Data[1]);
-      
+
       var svg = dimple.newSvg("#chartContainer", 840, 440); 
       var myChart = new dimple.chart(svg, Data);
       myChart.setBounds(60, 15, 700, 300);           
 
-      myChart.defaultColors = [
-          new dimple.color("#b9148a")
-      ];
+      myChart.defaultColors = [ new dimple.color("#b9148a") ];
 
       var x = myChart.addCategoryAxis("x", "year");
       var y = myChart.addMeasureAxis("y", "birth_rate");
-      y.title = "Birth Percentage";
+
+      y.overrideMin = 0;
+      y.overrideMax = 15;
+      y.title = "Births per 1,000 People";
 
       var s = myChart.addSeries(null, dimple.plot.bar);
 

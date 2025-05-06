@@ -33,7 +33,7 @@
     var svg = dimple.newSvg("#chartSVG", 840, 440);
 
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-      console.log("Raw data:", data);
+      console.log(data);
 
       // Convert values to appropriate types
       data.forEach(function(d) {

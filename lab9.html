@@ -5,18 +5,28 @@
   <title>Japan Birth Rate Chart</title>
   <script charset="utf-8" src="https://d3js.org/d3.v3.min.js"></script>
   <script charset="utf-8" src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+
+  <style>
+        
+    #chartContainer {width: 840px; margin: auto; margin-top: 50px; }
+    #chartContainer p {margin-left: 60px; margin-bottom: 5px; margin-top: 0; padding: 0;}
+    #charttitle {font: bold 22px  Verdana, sans-serif;}
+        
+</style>
 </head>
+  
 <body>
-  <div id="chartContainer"></div>
+  <div id="chartContainer">
+    <p id="charttitle">Japan Birth Rates</p>
+    <p id="chartsubhead">The Decline.</p>
+  </div>
 
-  <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-      var svg = dimple.newSvg("#chartContainer", 590, 400);
-      
-      d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function (data) {
-        console.log(data);
+  <script>
 
-        var myChart = new dimple.chart(svg, data);
+      d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function (japan_birth) {
+        console.log(japan_birth);
+
+        var svg = new dimple.chart(svg, data);
         myChart.setBounds(60, 30, 500, 300);
         
         var x = myChart.addCategoryAxis("x", "year");

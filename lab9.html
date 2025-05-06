@@ -21,7 +21,7 @@
 
   <script>
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(Data) {
-      console.log(Data[1]);  // Confirm the structure of the data
+      console.log(Data[1]);
       
       var svg = dimple.newSvg("#chartContainer", 840, 440); 
       var myChart = new dimple.chart(svg, Data);

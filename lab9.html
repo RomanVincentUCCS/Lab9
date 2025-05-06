@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Japan Birth Rate Chart</title>
+  <title>Japan Birth Rate Line Chart</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="/lib/d3.v4.3.0.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
-  <script type="text/javascript">
   <style>
     #chartContainer {
       width: 840px;
@@ -30,6 +29,8 @@
   </div>
 
   <script>
+    var svg = dimple.newSvg("#chartContainer", 840, 440);
+    
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
       
       data.forEach(function(d) {
@@ -45,25 +46,26 @@
         d.year = d.year.toString();
       });
 
-      var svg = dimple.newSvg("#chartContainer", 840, 440);
       var chart = new dimple.chart(svg, filteredData);
       chart.setBounds(60, 30, 700, 300);
 
-      chart.defaultColors = [ new dimple.color("#b9148a") ];
-
       var x = chart.addCategoryAxis("x", "year");
       x.addOrderRule("year");
-
       var y = chart.addMeasureAxis("y", "birth_rate");
       y.overrideMin = 6;
       y.overrideMax = 9;
       y.title = "Births per 1,000 People";
 
-      chart.addSeries(null, dimple.plot.bar);
+      chart.addColorAxis("birth_rate", ["green", "yellow", "red"]);
+
+      var line = chart.addSeries(null, dimple.plot.line);
+      line.lineWeight = 4;
+      line.lineMarkers = true;
 
       chart.draw();
     });
   </script>
 </body>
 </html>
+
 

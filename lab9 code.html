@@ -13,7 +13,7 @@
     document.addEventListener("DOMContentLoaded", function () {
       var svg = dimple.newSvg("#chartContainer", 590, 400);
       
-      d3.csv("japan_birth.csv", function (data) {
+      d3.csv("https://github.com/RomanVincentUCCS/Lab9/blob/main/japan_birth.csv", function (data) {
         data = dimple.filterData(data, "SKU", "Theta 18 Pack Standard");
         data = dimple.filterData(data, "Channel", "Hypermarkets");
 

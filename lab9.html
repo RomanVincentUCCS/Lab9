@@ -57,21 +57,18 @@
       y.overrideMax = 9;
       y.title = "Births per 1,000 People";
 
-      // Use dynamic color based on birth rate
       var colorScale = d3.scaleLinear()
-        .domain([6, 9])  // Adjust based on the min/max range of your birth rate
-        .range(["blue", "red"]);  // Blue for low, red for high birth rates
+        .domain([6, 9])
+        .range(["blue", "red"]);
 
-      // Create a dynamic line chart
       var series = chart.addSeries(null, dimple.plot.line);
       series.lineWeight = 3;
       series.lineMarkers = true;
 
-      // Change the color dynamically for each point
       series.afterDraw = function () {
         svg.selectAll(".dimple-line path")
           .style("stroke", function(d) {
-            return colorScale(d.birth_rate); // Dynamically assign color based on birth rate
+            return colorScale(d.birth_rate);
           });
       };
 

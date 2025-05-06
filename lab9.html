@@ -31,18 +31,16 @@
     var svg = dimple.newSvg("#chartContainer", 840, 440);
 
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-      // Convert strings to numbers where needed
+
       data.forEach(function(d) {
         d.year = +d.year;
         d.birth_rate = +d.birth_rate;
       });
 
-      // Filter years 2007–2022
       var filtered = data.filter(function(d) {
         return d.year >= 2007 && d.year <= 2022;
       });
 
-      // Convert year back to string for category axis
       filtered.forEach(function(d) {
         d.year = d.year.toString();
       });

@@ -25,35 +25,34 @@
   <div id="chartContainer">
     <p id="charttitle">Japan Birth Rates</p>
     <p id="chartsubhead">The Decline (2007–2022)</p>
-    <svg id="chartSVG" width="840" height="440"></svg>
+    <!-- REMOVE <svg> -->
   </div>
 
   <script>
-    // Create the SVG for the chart
-    var svg = dimple.newSvg("#chartSVG", 840, 440);
+    // Create the SVG inside the chartContainer div (correct usage)
+    var svg = dimple.newSvg("#chartContainer", 840, 440);
 
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-      console.log(data);
+      console.log("Raw data:", data);
 
-      // Convert values to appropriate types
+      // Convert types
       data.forEach(function(d) {
         d.year = +d.year;
         d.birth_rate = +d.birth_rate;
       });
 
-      // Filter years 2007–2022
+      // Filter years
       var filtered = data.filter(function(d) {
         return d.year >= 2007 && d.year <= 2022;
       });
 
-      // Convert year to string for axis
+      // Convert years to string for axis labels
       filtered.forEach(function(d) {
         d.year = d.year.toString();
       });
 
       console.log("Filtered data:", filtered);
 
-      // Build the chart
       var chart = new dimple.chart(svg, filtered);
       chart.setBounds(60, 30, 700, 300);
 
@@ -74,5 +73,6 @@
   </script>
 </body>
 </html>
+
 
 

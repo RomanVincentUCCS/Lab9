@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Japan Birth Rate Chart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
   <style>
@@ -11,13 +11,14 @@
       margin: auto;
       margin-top: 50px;
     }
+    #chartContainer p {
+      margin-left: 60px;
+      margin-bottom: 5px;
+      margin-top: 0;
+      padding: 0;
+    }
     #charttitle {
       font: bold 22px Verdana, sans-serif;
-      margin-left: 60px;
-    }
-    #chartsubhead {
-      margin-left: 60px;
-      font-family: Verdana, sans-serif;
     }
   </style>
 </head>
@@ -25,36 +26,33 @@
   <div id="chartContainer">
     <p id="charttitle">Japan Birth Rates</p>
     <p id="chartsubhead">The Decline (2007–2022)</p>
-    <!-- REMOVE <svg> -->
+    <!-- Dimple will draw the SVG here -->
   </div>
 
   <script>
-    // Create the SVG inside the chartContainer div (correct usage)
-    var svg = dimple.newSvg("#chartContainer", 840, 440);
-
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-      console.log(data);
-
-      // Convert types
-      data.forEach(function(data) {
+      // Parse values
+      data.forEach(function(d) {
         d.year = +d.year;
         d.birth_rate = +d.birth_rate;
       });
 
       // Filter years
-      var filtered = data.filter(function(data) {
+      var filteredData = data.filter(function(d) {
         return d.year >= 2007 && d.year <= 2022;
       });
 
-      // Convert years to string for axis labels
-      filtered.forEach(function(data) {
+      // Convert years to strings for Dimple's category axis
+      filteredData.forEach(function(d) {
         d.year = d.year.toString();
       });
 
-      console.log("Filtered data:", filtered);
-
-      var chart = new dimple.chart(svg, filtered);
+      // Create the chart
+      var svg = dimple.newSvg("#chartContainer", 840, 440);
+      var chart = new dimple.chart(svg, filteredData);
       chart.setBounds(60, 30, 700, 300);
+
+      chart.defaultColors = [ new dimple.color("#b9148a") ];
 
       var x = chart.addCategoryAxis("x", "year");
       x.addOrderRule("year");
@@ -64,15 +62,10 @@
       y.overrideMax = 9;
       y.title = "Births per 1,000 People";
 
-      var series = chart.addSeries(null, dimple.plot.line);
-      series.lineWeight = 3;
-      series.lineMarkers = true;
+      chart.addSeries(null, dimple.plot.bar);
 
       chart.draw();
     });
   </script>
 </body>
 </html>
-
-
-

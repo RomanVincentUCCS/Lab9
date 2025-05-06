@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Dimple Chart on GitHub Pages</title>
+  <title>Japan Birth Rate Chart</title>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
 </head>
@@ -13,19 +13,17 @@
     document.addEventListener("DOMContentLoaded", function () {
       var svg = dimple.newSvg("#chartContainer", 590, 400);
       
-      d3.csv("https://github.com/RomanVincentUCCS/Lab9/blob/main/japan_birth.csv", function (data) {
-        data = dimple.filterData(data, "SKU", "Theta 18 Pack Standard");
-        data = dimple.filterData(data, "Channel", "Hypermarkets");
-
+      d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function (data) {
         var myChart = new dimple.chart(svg, data);
         myChart.setBounds(60, 30, 500, 300);
-        var x = myChart.addCategoryAxis("x", "Month");
-        myChart.addMeasureAxis("y", "Unit Sales");
-        x.addOrderRule("Date");
-        myChart.addColorAxis("Price", ["green", "yellow", "red"]);
+        
+        var x = myChart.addCategoryAxis("x", "Year"); // Make sure "Year" is a column in your CSV
+        var y = myChart.addMeasureAxis("y", "Birth Rate"); // Make sure "Birth Rate" is a column in your CSV
+
         var lines = myChart.addSeries(null, dimple.plot.line);
-        lines.lineWeight = 5;
+        lines.lineWeight = 3;
         lines.lineMarkers = true;
+
         myChart.draw();
       });
     });

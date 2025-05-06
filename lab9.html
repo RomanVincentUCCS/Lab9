@@ -33,21 +33,21 @@
     var svg = dimple.newSvg("#chartContainer", 840, 440);
 
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-      console.log("Raw data:", data);
+      console.log(data);
 
       // Convert types
-      data.forEach(function(d) {
+      data.forEach(function(data) {
         d.year = +d.year;
         d.birth_rate = +d.birth_rate;
       });
 
       // Filter years
-      var filtered = data.filter(function(d) {
+      var filtered = data.filter(function(data) {
         return d.year >= 2007 && d.year <= 2022;
       });
 
       // Convert years to string for axis labels
-      filtered.forEach(function(d) {
+      filtered.forEach(function(data) {
         d.year = d.year.toString();
       });
 

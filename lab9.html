@@ -17,8 +17,8 @@
         var myChart = new dimple.chart(svg, data);
         myChart.setBounds(60, 30, 500, 300);
         
-        var x = myChart.addCategoryAxis("x", "Year");
-        var y = myChart.addMeasureAxis("y", "Birth Rate");
+        var x = myChart.addCategoryAxis("x", "year");
+        var y = myChart.addMeasureAxis("y", "birth_rate");
 
         var lines = myChart.addSeries(null, dimple.plot.line);
         lines.lineWeight = 3;

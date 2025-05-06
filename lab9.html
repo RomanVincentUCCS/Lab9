@@ -49,11 +49,10 @@
       var chart = new dimple.chart(svg, filtered);
       chart.setBounds(60, 30, 700, 300);
 
-      var x = chart.addCategoryAxis("x", "Year");
+      var x = chart.addCategoryAxis("x", "year");
       x.addOrderRule("Year");
 
-      var y = chart.addMeasureAxis("y", "Birth Rate");
-      y.overrideMin = 6;
+      var y = chart.addMeasureAxis("y", "birth_rate");
       y.overrideMax = 9;
       y.title = "Births per 1,000 People";
 

@@ -13,7 +13,7 @@
     document.addEventListener("DOMContentLoaded", function () {
       var svg = dimple.newSvg("#chartContainer", 590, 400);
       
-      d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function (data) {
+      d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function (data) {
         var myChart = new dimple.chart(svg, data);
         myChart.setBounds(60, 30, 500, 300);
         

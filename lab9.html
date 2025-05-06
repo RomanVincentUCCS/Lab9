@@ -31,6 +31,7 @@
     var svg = dimple.newSvg("#chartContainer", 840, 440);
 
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
+      console.log("Original data loaded:", data); // ✅ CSV loaded
 
       data.forEach(function(d) {
         d.year = +d.year;
@@ -41,8 +42,10 @@
         return d.year >= 2007 && d.year <= 2022;
       });
 
+      console.log("Filtered data (2007–2022):", filteredData); // ✅ Filter result
+
       filteredData.forEach(function(d) {
-        d.year = d.year.toString();
+        d.year = d.year.toString(); // Convert year to string for axis
       });
 
       var chart = new dimple.chart(svg, filteredData);

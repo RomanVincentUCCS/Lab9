@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Japan Birth Rate Chart</title>
- <script charset="utf-8" src="https://d3js.org/d3.v3.min.js"></script>
- <script charset="utf-8" src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
-  
+  <script charset="utf-8" src="https://d3js.org/d3.v3.min.js"></script>
+  <script charset="utf-8" src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+
   <style>
     #chartContainer { width: 840px; margin: auto; margin-top: 50px; }
     #chartContainer p { margin-left: 60px; margin-bottom: 5px; margin-top: 0; padding: 0; }
@@ -19,23 +20,33 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var svg = dimple.newSvg("#chartContainer", 840, 400);
+  d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function(Data) {
+            
+            console.log(Data[1]);
+          
+            var svg = dimple.newSvg("#chartContainer", 840, 440); 
+            var myChart = new dimple.chart(svg, Data);
+            myChart.setBounds(60, 15, 700, 300);           
 
-      d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function (data) {
-        console.log(data);
+            myChart.defaultColors = [
+                new dimple.color("#b9148a")
+            ];
 
-        var myChart = new dimple.chart(svg, data);
-        myChart.setBounds(60, 30, 700, 300);
 
-        var x = myChart.addCategoryAxis("x", "year");
-        var y = myChart.addMeasureAxis("y", "birth_rate");
+            var x = myChart.addCategoryAxis("x", "year");
 
-        var lines = myChart.addSeries(null, dimple.plot.line);
-        lines.lineWeight = 3;
-        lines.lineMarkers = true;
+            var y = myChart.addMeasureAxis("y", "birth_rate");
+            y.title = "Birth Percentage";
 
-        myChart.draw();
+            var s = myChart.addSeries(null, dimple.plot.bar);
+
+            myChart.draw(500);
+
+            svg.selectAll("path.domain").style("stroke", "#000"); 
+            svg.selectAll("g.tick line").style("stroke", "#000");
+
+      });
+
       });
     });
   </script>

@@ -1,18 +1,27 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
   <title>Japan Birth Rate Chart</title>
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-  <script charset="utf-8" src="https://d3js.org/d3.v4.min.js"></script>
-  <script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
   <style>
-    #chartContainer { width: 840px; margin: auto; margin-top: 50px; }
-    #chartContainer p { margin-left: 60px; margin-bottom: 5px; margin-top: 0; padding: 0; }
-    #charttitle { font: bold 22px Verdana, sans-serif; }
+    #chartContainer {
+      width: 840px;
+      margin: auto;
+      margin-top: 50px;
+    }
+    #chartContainer p {
+      margin-left: 60px;
+      margin-bottom: 5px;
+      margin-top: 0;
+      padding: 0;
+    }
+    #charttitle {
+      font: bold 22px Verdana, sans-serif;
+    }
   </style>
 </head>
-
 <body>
   <div id="chartContainer">
     <p id="charttitle">Japan Birth Rates</p>
@@ -20,16 +29,14 @@
   </div>
 
   <script>
-
-    d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function(Data) {
-      console.log(Data);
-
-      Data.forEach(function(d) {
+    d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
+      
+      data.forEach(function(d) {
         d.year = +d.year;
         d.birth_rate = +d.birth_rate;
       });
 
-      var filteredData = Data.filter(function(d) {
+      var filteredData = data.filter(function(d) {
         return d.year >= 2007 && d.year <= 2022;
       });
 
@@ -37,26 +44,23 @@
         d.year = d.year.toString();
       });
 
-      var svg = dimple.newSvg("#chartContainer", 840, 440); 
-      var myChart = new dimple.chart(svg, filteredData);
-      myChart.setBounds(60, 15, 700, 300);           
+      var svg = dimple.newSvg("#chartContainer", 840, 440);
+      var chart = new dimple.chart(svg, filteredData);
+      chart.setBounds(60, 30, 700, 300);
 
-      myChart.defaultColors = [ new dimple.color("#b9148a") ];
+      chart.defaultColors = [ new dimple.color("#b9148a") ];
 
-      var x = myChart.addCategoryAxis("x", "year");
+      var x = chart.addCategoryAxis("x", "year");
       x.addOrderRule("year");
 
-      var y = myChart.addMeasureAxis("y", "birth_rate");
+      var y = chart.addMeasureAxis("y", "birth_rate");
       y.overrideMin = 6;
       y.overrideMax = 9;
       y.title = "Births per 1,000 People";
 
-      var s = myChart.addSeries(null, dimple.plot.bar);
+      chart.addSeries(null, dimple.plot.bar);
 
-      myChart.draw(500);
-
-      svg.selectAll("path.domain").style("stroke", "#000"); 
-      svg.selectAll("g.tick line").style("stroke", "#000");
+      chart.draw();
     });
   </script>
 </body>

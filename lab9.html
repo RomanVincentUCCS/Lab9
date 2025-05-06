@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Japan Birth Rate Chart</title>
-  <meta charset="utf-8" />
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
   <style>
@@ -25,30 +25,36 @@
   <div id="chartContainer">
     <p id="charttitle">Japan Birth Rates</p>
     <p id="chartsubhead">The Decline (2007–2022)</p>
+    <svg id="chartSVG" width="840" height="440"></svg>
   </div>
 
   <script>
-    var svg = dimple.newSvg("#chartContainer", 840, 440);
+    // Create the SVG for the chart
+    var svg = dimple.newSvg("#chartSVG", 840, 440);
 
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-      console.log("Original data loaded:", (data); // ✅ CSV loaded
+      console.log("Raw data:", data);
 
+      // Convert values to appropriate types
       data.forEach(function(d) {
         d.year = +d.year;
         d.birth_rate = +d.birth_rate;
       });
 
-      var filteredData = data.filter(function(d) {
+      // Filter years 2007–2022
+      var filtered = data.filter(function(d) {
         return d.year >= 2007 && d.year <= 2022;
       });
 
-      console.log("Filtered data (2007–2022):", filteredData); // ✅ Filter result
-
-      filteredData.forEach(function(d) {
-        d.year = d.year.toString(); // Convert year to string for axis
+      // Convert year to string for axis
+      filtered.forEach(function(d) {
+        d.year = d.year.toString();
       });
 
-      var chart = new dimple.chart(svg, filteredData);
+      console.log("Filtered data:", filtered);
+
+      // Build the chart
+      var chart = new dimple.chart(svg, filtered);
       chart.setBounds(60, 30, 700, 300);
 
       var x = chart.addCategoryAxis("x", "year");
@@ -68,4 +74,5 @@
   </script>
 </body>
 </html>
+
 

@@ -31,7 +31,7 @@
     var svg = dimple.newSvg("#chartContainer", 840, 440);
 
     d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/main/japan_birth.csv", function(data) {
-      console.log("Original data loaded:", data); // ✅ CSV loaded
+      console.log("Original data loaded:", (data); // ✅ CSV loaded
 
       data.forEach(function(d) {
         d.year = +d.year;

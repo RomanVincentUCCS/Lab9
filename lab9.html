@@ -20,28 +20,39 @@
   </div>
 
   <script>
-    d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function(Data) {
-      console.log(Data[1]);
+    <script>
+  d3.csv("https://raw.githubusercontent.com/RomanVincentUCCS/Lab9/refs/heads/main/japan_birth.csv", function(Data) {
+    Data.forEach(function(d) {
+      d.year = +d.year;
+      d.birth_rate = +d.birth_rate;
+    });
 
-      var svg = dimple.newSvg("#chartContainer", 840, 440); 
-      var myChart = new dimple.chart(svg, Data);
-      myChart.setBounds(60, 15, 700, 300);           
+    var filteredData = Data.filter(function(d) {
+      return d.year >= 2007 && d.year <= 2022;
+    });
 
-      myChart.defaultColors = [ new dimple.color("#b9148a") ];
+    var svg = dimple.newSvg("#chartContainer", 840, 440); 
+    var myChart = new dimple.chart(svg, filteredData);
+    myChart.setBounds(60, 15, 700, 300);           
 
-      var x = myChart.addCategoryAxis("x", "year");
-      var y = myChart.addMeasureAxis("y", "birth_rate");
+    myChart.defaultColors = [ new dimple.color("#b9148a") ];
 
-      y.overrideMin = 0;
-      y.overrideMax = 15;
-      y.title = "Births per 1,000 People";
+    var x = myChart.addCategoryAxis("x", "year");
+    x.addOrderRule("year");  // Keep years in order
 
-      var s = myChart.addSeries(null, dimple.plot.bar);
+    var y = myChart.addMeasureAxis("y", "birth_rate");
+    y.overrideMin = 6;
+    y.overrideMax = 9;
+    y.title = "Births per 1,000 People";
 
-      myChart.draw(500);
+    var s = myChart.addSeries(null, dimple.plot.bar);
 
-      svg.selectAll("path.domain").style("stroke", "#000"); 
-      svg.selectAll("g.tick line").style("stroke", "#000");
+    myChart.draw(500);
+
+    svg.selectAll("path.domain").style("stroke", "#000"); 
+    svg.selectAll("g.tick line").style("stroke", "#000");
+  });
+</script>
     });
   </script>
 </body>
